@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		14AD00BA29DCE82400827F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AD00B829DCE82400827F56 /* Main.storyboard */; };
 		14AD00BC29DCE82500827F56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AD00BB29DCE82500827F56 /* Assets.xcassets */; };
 		14AD00BF29DCE82500827F56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14AD00BD29DCE82500827F56 /* LaunchScreen.storyboard */; };
+		16A58FD09973E2157E6D0ECB /* Pods_portto_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1DF4946A589D501E66E74B /* Pods_portto_project.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		14AD00BB29DCE82500827F56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14AD00BE29DCE82500827F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14AD00C029DCE82500827F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		672AB63B660AE84D1C9F7429 /* Pods-portto-project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-portto-project.release.xcconfig"; path = "Target Support Files/Pods-portto-project/Pods-portto-project.release.xcconfig"; sourceTree = "<group>"; };
+		C8117530FE250502CB5842F2 /* Pods-portto-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-portto-project.debug.xcconfig"; path = "Target Support Files/Pods-portto-project/Pods-portto-project.debug.xcconfig"; sourceTree = "<group>"; };
+		CD1DF4946A589D501E66E74B /* Pods_portto_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_portto_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16A58FD09973E2157E6D0ECB /* Pods_portto_project.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				14AD00B129DCE82400827F56 /* portto-project */,
 				14AD00B029DCE82400827F56 /* Products */,
+				5B9E39AA2E067FB7C77E1CD6 /* Pods */,
+				D6B2F5FECE19AD1F940EB074 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,24 @@
 			path = "portto-project";
 			sourceTree = "<group>";
 		};
+		5B9E39AA2E067FB7C77E1CD6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C8117530FE250502CB5842F2 /* Pods-portto-project.debug.xcconfig */,
+				672AB63B660AE84D1C9F7429 /* Pods-portto-project.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D6B2F5FECE19AD1F940EB074 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD1DF4946A589D501E66E74B /* Pods_portto_project.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 14AD00C329DCE82500827F56 /* Build configuration list for PBXNativeTarget "portto-project" */;
 			buildPhases = (
+				7988CD0AC0FA3CB6FE586BF3 /* [CP] Check Pods Manifest.lock */,
 				14AD00AB29DCE82400827F56 /* Sources */,
 				14AD00AC29DCE82400827F56 /* Frameworks */,
 				14AD00AD29DCE82400827F56 /* Resources */,
+				191E8782E3E099A707DDDA73 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -103,7 +130,7 @@
 				};
 			};
 			buildConfigurationList = 14AD00AA29DCE82300827F56 /* Build configuration list for PBXProject "portto-project" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		191E8782E3E099A707DDDA73 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-portto-project/Pods-portto-project-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-portto-project/Pods-portto-project-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-portto-project/Pods-portto-project-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7988CD0AC0FA3CB6FE586BF3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-portto-project-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		14AD00AB29DCE82400827F56 /* Sources */ = {
@@ -282,6 +351,7 @@
 		};
 		14AD00C429DCE82500827F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8117530FE250502CB5842F2 /* Pods-portto-project.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,6 +365,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,6 +381,7 @@
 		};
 		14AD00C529DCE82500827F56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 672AB63B660AE84D1C9F7429 /* Pods-portto-project.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -323,6 +395,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
