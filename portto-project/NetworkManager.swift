@@ -9,6 +9,7 @@ import RxAlamofire
 import Alamofire
 import RxSwift
 import Moya
+import Foundation
 
 enum NetworkError: Error {
     case FailedRequest
@@ -18,23 +19,30 @@ enum NetworkError: Error {
 
 enum TestNets {
     case assets(offset: Int, limit: Int = 20, address: String = "0x85fD692D2a075908079261F5E351e7fE0267dB02")
+    case downloadImage(url: String)
 }
 
 extension TestNets: TargetType {
         
     var baseURL: URL {
-        return URL(string: "https://testnets-api.opensea.io")!
+        switch self {
+            case .assets: return URL(string: "https://testnets-api.opensea.io")!
+            case .downloadImage(let url) : return URL(string: url)!
+        }
     }
     
     var path: String {
         switch self {
-            case .assets: return "/api/v1/assets"
+            case .assets:
+                return "/api/v1/assets"
+            case .downloadImage:
+                return ""
         }
     }
     
     var method: Moya.Method {
         switch self {
-            case .assets: return .get
+            case .assets, .downloadImage: return .get
         }
     }
     
@@ -45,7 +53,9 @@ extension TestNets: TargetType {
                 params["owner"] = address
                 params["offset"] = offset
                 params["limit"] = limit
-            return .requestParameters(parameters: params, encoding: URLEncoding.default)
+                return .requestParameters(parameters: params, encoding: URLEncoding.default)
+            case .downloadImage:
+                return .requestPlain
         }
     }
     
@@ -89,5 +99,26 @@ class NetworkManager {
 
             return Disposables.create()
         }
-    }    
+    }
+    
+    func downloadImage(_ index: Int, url: String) -> Observable<Result<(Int, UIImage), Error>> {
+        
+        return Observable.create { [self] (observer) -> Disposable in
+                        
+            let _ = provider.rx
+                .request(.downloadImage(url: url))
+                .observe(on: MainScheduler.instance)
+                .mapImage()
+                .subscribe(onSuccess: { image in
+                                        
+                    observer.onNext(.success((index, image)))
+                    observer.onCompleted()
+                }, onFailure: { error in
+                    observer.onNext(.failure(error))
+                    observer.onCompleted()
+                })
+
+            return Disposables.create()
+        }
+    }
 }

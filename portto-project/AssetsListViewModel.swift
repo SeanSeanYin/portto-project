@@ -13,12 +13,14 @@ import RxRelay
 protocol AssetsListViewModelProtocol {
     var isLoading: BehaviorRelay<Bool> { get }
     var scrollToEnd: PublishRelay<Void> { get }
+    var imageData: PublishRelay<(UIImage, Int, Bool)> { get }
 }
 
 class AssetsListViewModel: AssetsListViewModelProtocol {
     
     let isLoading =  BehaviorRelay<Bool>(value: true)
     let scrollToEnd =  PublishRelay<Void>()
+    let imageData = PublishRelay<(UIImage, Int, Bool)>()
     
     private let disposeBag = DisposeBag()
     
@@ -26,6 +28,14 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     private let coordinator: AssetsListCoordinator
     
     private var page: Int = 0
+    private var cachedImages:[(Int, UIImage)] = []
+    
+    func imageOfIndex(index: Int) -> UIImage? {
+        if let image = cachedImages.first(where: { $0.0 == index }) {
+            return image.1
+        }
+        return nil
+    }
     
     let assets = BehaviorRelay<[AssetDetail]>(value: [])
     
@@ -43,9 +53,7 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
         scrollToEnd
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-        
-                debugPrint("setupScrollToEnd")
-                
+                        
                 guard !owner.isLoading.value else {
                     return
                 }
@@ -73,8 +81,12 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
                         tmpAssets.append(contentsOf: owner.assets.value)
                     }
                     tmpAssets.append(contentsOf: newAssets)
-                    
-                    debugPrint(tmpAssets.count)
+                                        
+                    for (index, asset) in tmpAssets.enumerated() {
+                        if let url = asset.imageUrl {
+                            owner.getImage(index, url: url)
+                        }
+                    }
                     
                     Observable<[AssetDetail]>.just(tmpAssets).bind(to: owner.assets).disposed(by: owner.disposeBag)
                     
@@ -85,5 +97,26 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
                 Observable<Bool>.just(false).bind(to: owner.isLoading).disposed(by: owner.disposeBag)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func getImage(_ index: Int, url: String) {
+        
+        if let target = cachedImages.first(where: { $0.0 == index }) {
+            imageData.accept((target.1, index, true))
+        } else {
+            networkManager
+                .downloadImage(index, url: url)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, result in
+                    switch result {
+                        case .success(let arg):
+                            owner.cachedImages.append(arg)
+                            owner.imageData.accept((arg.1, arg.0, true))
+                        case .failure(_):
+                            owner.imageData.accept((UIImage(), index, false))
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
     }
 }

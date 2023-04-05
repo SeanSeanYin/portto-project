@@ -65,6 +65,19 @@ class AssetsListViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.imageData
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, arg) in
+                
+                let (image, index, success) = arg
+                
+                if let cell = owner.assetsListView.cellForItem(at: IndexPath(item: index, section: 0)) as? AssetCell, success {
+                    cell.imageView.image = image
+                }
+            })
+            .disposed(by: disposeBag)
+        
         assetsListView.rx.willDisplayCell
             .withUnretained(self)
             .do(onNext: {(owner, arg) in
@@ -73,16 +86,29 @@ class AssetsListViewController: UIViewController {
                 
                 let currentSection = owner.assetsListView.numberOfSections
                 let currentItem = owner.assetsListView.numberOfItems(inSection: indexPath.section)
-                let isScrollToEnd = (indexPath.section == currentSection - 1 && indexPath.row == currentItem - 1)
                 
-                debugPrint(indexPath.section, indexPath.item, currentSection, currentItem, isScrollToEnd)
-                
-                if isScrollToEnd {
+                if (indexPath.section == currentSection - 1 && indexPath.row == currentItem - 1) {
                     Observable<Void>.just(()).bind(to: owner.viewModel.scrollToEnd).disposed(by: owner.disposeBag)
                 }
             })
             .subscribe()
             .disposed(by: disposeBag)
+                
+            assetsListView.rx.willDisplayCell
+                .filter { $0.cell.isKind(of: AssetCell.self) }
+                .map { ($0.cell as! AssetCell, $0.at.item)}
+                .do(onNext: { (cell, index) in
+                    cell.imageView.image = nil
+                })
+                .withUnretained(self)
+                .subscribe(onNext: { (owner, args) in
+                    
+                    let (cell, index) = args
+                    if let cachedImage = owner.viewModel.imageOfIndex(index: index) {
+                        cell.imageView.image = cachedImage
+                    }
+                })
+                .disposed(by: disposeBag)
         
     }
     
