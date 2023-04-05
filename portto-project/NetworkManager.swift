@@ -65,20 +65,13 @@ class NetworkManager {
         self.provider = provider
     }
         
-    func getAssets(from offset: Int, limit: Int = limitaionPerPage) -> Observable<Result<[AssetDetail], Error>> {
+    func getAssets(_ page: Int, limit: Int = limitaionPerPage) -> Observable<Result<[AssetDetail], Error>> {
         
         return Observable.create { [self] (observer) -> Disposable in
-            
-            guard let request = try? URLRequest(url: "https://testnets-api.opensea.io/api/v1/assets", method: .get) else {
-                return Disposables.create {
-                    return observer.onNext(.failure(NetworkError.FailedRequest))
-                }
-            }
-            
-            debugPrint(request)
-            
+                        
             let _ = provider.rx
-                .request(.assets(offset: offset, limit: limit))
+                .request(.assets(offset: page * limit, limit: limit))
+                .timeout(RxTimeInterval.milliseconds(5000), scheduler: MainScheduler.instance)
                 .observe(on: MainScheduler.instance)
                 .subscribe(onSuccess: { response in
                     

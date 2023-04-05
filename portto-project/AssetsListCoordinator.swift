@@ -25,7 +25,5 @@ class AssetsListCoordinator: Coordinator {
         assetsListVC.viewModel = assetsListVM
         
         nvController.pushViewController(assetsListVC, animated: true)
-    }
-    
-    
+    }        
 }
