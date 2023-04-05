@@ -13,22 +13,32 @@ import RxRelay
 protocol AssetDetailViewModelProtocol {
     var navigationBarTitle: BehaviorRelay<String> { get }
     var tapPermalinkButton: PublishRelay<Void> { get }
+    var image: BehaviorRelay<UIImage?> { get }
+    var name: BehaviorRelay<String?> { get }
+    var description: BehaviorRelay<String?> { get }
 }
 
 class AssetDetailViewModel: AssetDetailViewModelProtocol {
                 
     let navigationBarTitle = BehaviorRelay<String>(value: "")
     let tapPermalinkButton = PublishRelay<Void>()
+    let image = BehaviorRelay<UIImage?>(value: nil)
+    let name = BehaviorRelay<String?> (value: nil)
+    let description = BehaviorRelay<String?> (value: nil)
     
     private let disposeBag = DisposeBag()
     private let coordinator: AssetDetailCoordinator
     
     init(coordinator: AssetDetailCoordinator) {
         self.coordinator = coordinator
-        
-        if let name = coordinator._asset.name {
+    
+        if let name = coordinator._asset.collection?.name {
             navigationBarTitle.accept(name)
         }
+        
+        image.accept(coordinator._image)
+        name.accept(coordinator._asset.name)
+        description.accept(coordinator._asset.description)
         
         tapPermalinkButton
             .withUnretained(self)
@@ -41,4 +51,3 @@ class AssetDetailViewModel: AssetDetailViewModelProtocol {
             .disposed(by: disposeBag)
     }
 }
-
