@@ -94,22 +94,26 @@ class AssetsListViewController: UIViewController {
             .subscribe()
             .disposed(by: disposeBag)
                 
-            assetsListView.rx.willDisplayCell
-                .filter { $0.cell.isKind(of: AssetCell.self) }
-                .map { ($0.cell as! AssetCell, $0.at.item)}
-                .do(onNext: { (cell, index) in
-                    cell.imageView.image = nil
-                })
-                .withUnretained(self)
-                .subscribe(onNext: { (owner, args) in
-                    
-                    let (cell, index) = args
-                    if let cachedImage = owner.viewModel.imageOfIndex(index: index) {
-                        cell.imageView.image = cachedImage
-                    }
-                })
-                .disposed(by: disposeBag)
-        
+        assetsListView.rx.willDisplayCell
+            .filter { $0.cell.isKind(of: AssetCell.self) }
+            .map { ($0.cell as! AssetCell, $0.at.item)}
+            .do(onNext: { (cell, index) in
+                cell.imageView.image = nil
+            })
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, args) in
+                
+                let (cell, index) = args
+                if let cachedImage = owner.viewModel.imageOfIndex(index: index) {
+                    cell.imageView.image = cachedImage
+                }
+            })
+            .disposed(by: disposeBag)
+                
+        assetsListView.rx.modelSelected(AssetDetail.self)
+            .compactMap { return $0.id }
+            .bind(to: viewModel.selectedId)
+            .disposed(by: disposeBag)
     }
     
     private func setupActivityIndicator() {

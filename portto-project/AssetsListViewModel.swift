@@ -14,16 +14,17 @@ protocol AssetsListViewModelProtocol {
     var isLoading: BehaviorRelay<Bool> { get }
     var scrollToEnd: PublishRelay<Void> { get }
     var imageData: PublishRelay<(UIImage, Int, Bool)> { get }
+    var selectedId: PublishRelay<Int> { get }
 }
 
 class AssetsListViewModel: AssetsListViewModelProtocol {
-    
+            
     let isLoading =  BehaviorRelay<Bool>(value: true)
     let scrollToEnd =  PublishRelay<Void>()
     let imageData = PublishRelay<(UIImage, Int, Bool)>()
+    let selectedId = PublishRelay<Int>()
     
     private let disposeBag = DisposeBag()
-    
     private let networkManager: NetworkManager
     private let coordinator: AssetsListCoordinator
     
@@ -45,6 +46,7 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
         self.coordinator = coordinator
                         
         setupScrollToEnd()
+        setupSelectedId()
         getAssets()
     }
     
@@ -60,6 +62,19 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
                 
                 owner.page += 1
                 owner.getAssets()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupSelectedId() {
+        selectedId
+            .withUnretained(self)
+            .subscribe(onNext: { owner, id in
+                let tmpAssets = owner.assets.value
+                if let asset = tmpAssets.first(where: { $0.id == id }), let index = tmpAssets.firstIndex(where: { $0 == asset }) {
+                    let image = owner.imageOfIndex(index: index)
+                    owner.coordinator.pushAssetDetailPage(asset, image: image)
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -25,5 +25,12 @@ class AssetsListCoordinator: Coordinator {
         assetsListVC.viewModel = assetsListVM
         
         nvController.pushViewController(assetsListVC, animated: true)
-    }        
+    }
+    
+    func pushAssetDetailPage(_ asset: AssetDetail, image: UIImage?) {
+        
+        let assetDetailCoordinator = AssetDetailCoordinator(navigationController: nvController, asset: asset, image: image)
+        
+        coordinate(to: assetDetailCoordinator)
+    }
 }

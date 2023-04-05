@@ -10,13 +10,18 @@ import Foundation
 struct AssetsResponse: Codable {
     var assets: [AssetDetail]
     
-    enum CodingKeys: String, CodingKey {        
+    enum CodingKeys: String, CodingKey {
         case assets
     }
 }
 
-struct AssetDetail: Codable {
+struct AssetDetail: Codable, Equatable {
     
+    static func == (lhs: AssetDetail, rhs: AssetDetail) -> Bool {
+        return lhs.id == rhs.id
+    }
+        
+    var id: Int?
     var imageUrl: String?
     var name: String?
     var collection: AssetCollection?
@@ -25,9 +30,11 @@ struct AssetDetail: Codable {
     
     enum CodingKeys: String, CodingKey {
         
-        case name, collection, description, permalink
+        case id, name, collection, description, permalink
         case imageUrl = "image_url"
     }
+    
+    
 }
 
 struct AssetCollection: Codable {
