@@ -8,5 +8,7 @@ target 'portto-project' do
   # Pods for portto-project
     pod 'RxSwift', '6.5.0'
     pod 'RxCocoa', '6.5.0'
-
+    pod 'Alamofire'
+    pod 'RxAlamofire'
+    pod 'Moya/RxSwift', '~> 15.0'
 end

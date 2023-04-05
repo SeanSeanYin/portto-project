@@ -17,9 +17,10 @@ class AssetsListCoordinator: Coordinator {
     
     
     func start() {
-        
-        let assetsListVC = AssetsListViewController()
-        let assetsListVM = AssetsListViewModel()
+                
+        let assetsListVC =  AssetsListViewController()
+        let networkManager = NetworkManager()
+        let assetsListVM = AssetsListViewModel(networkManager: networkManager, coordinator: self)
         
         assetsListVC.viewModel = assetsListVM
         
