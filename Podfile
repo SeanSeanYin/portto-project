@@ -13,4 +13,7 @@ target 'portto-project' do
     pod 'Moya/RxSwift', '~> 15.0'
     pod 'web3.swift'
 
+  target 'portto-projectTests' do
+    inherit! :search_paths
+  end
 end

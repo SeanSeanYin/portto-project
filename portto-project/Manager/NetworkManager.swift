@@ -128,3 +128,40 @@ class NetworkManager: NetworkProtocol{
         }
     }
 }
+
+class MockNetworkManager: NetworkProtocol {
+    
+    func getAssets(_ page: Int, limit: Int) -> Observable<Result<[AssetDetail], Error>> {
+        
+        return Observable.create({ observer in
+            
+            
+            var assets:[AssetDetail] = []
+            
+            let firstIndex = (page == 0) ? 0 : page * limit
+            let lasttIndex = (page == 0) ? limit : (page + 1 ) * limit
+            
+            for i in firstIndex..<lasttIndex {
+                let asset = AssetDetail(id: i, imageUrl: nil, name: nil, collection: nil, description: nil, permalink: nil)
+                assets.append(asset)
+            }
+            
+            observer.onNext(.success(assets))
+            observer.onCompleted()
+            
+            return Disposables.create()
+        })
+    }
+    
+    func downloadImage(_ index: Int, url: String) -> Observable<Result<(Int, UIImage), Error>> {
+        
+        return Observable.create({ observer in
+            
+            let image = UIImage(systemName: "paperplane.fill")
+            observer.onNext(.success((index, image!)))
+            observer.onCompleted()
+            
+            return Disposables.create()
+        })
+    }
+}

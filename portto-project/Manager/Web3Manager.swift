@@ -55,3 +55,16 @@ class Web3Manager: Web3Protocol {
     }
 }
 
+class MockWeb3Manager: Web3Protocol {
+    
+    func getBalance(_ address: String) async -> RxSwift.Observable<Result<String, Error>> {
+        
+        return Observable<Result<String, Error>>.create({ (observer) -> Disposable in
+            
+            observer.onNext(.success("11 ETH"))
+            observer.onCompleted()
+            
+            return Disposables.create()
+        })
+    }
+}

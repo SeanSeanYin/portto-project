@@ -27,8 +27,8 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     let navigationBarTitle = BehaviorRelay<String>(value: "")
     
     private let disposeBag = DisposeBag()
-    private let networkManager: NetworkManager
-    private let web3Manager: Web3Manager
+    private let networkManager: NetworkProtocol
+    private let web3Manager: Web3Protocol
     private let coordinator: AssetsListCoordinator
     
     private var page: Int = 0
@@ -44,7 +44,7 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     
     let assets = BehaviorRelay<[AssetDetail]>(value: [])
     
-    init(networkManager: NetworkManager, web3Manager: Web3Manager, coordinator: AssetsListCoordinator) {
+    init(networkManager: NetworkProtocol, web3Manager: Web3Protocol, coordinator: AssetsListCoordinator) {
         
         self.networkManager = networkManager
         self.web3Manager = web3Manager
