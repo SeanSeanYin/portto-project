@@ -64,10 +64,16 @@ extension TestNets: TargetType {
     }
 }
 
-class NetworkManager {
+protocol NetworkProtocol: AnyObject {
+    
+    func getAssets(_ page: Int, limit: Int) -> Observable<Result<[AssetDetail], Error>>
+    
+    func downloadImage(_ index: Int, url: String) -> Observable<Result<(Int, UIImage), Error>>
+}
+
+class NetworkManager: NetworkProtocol{
     
     private let disposeBag = DisposeBag()
-    private static let limitaionPerPage = 20
 
     var provider: MoyaProvider<TestNets>!
     
@@ -75,7 +81,7 @@ class NetworkManager {
         self.provider = provider
     }
         
-    func getAssets(_ page: Int, limit: Int = limitaionPerPage) -> Observable<Result<[AssetDetail], Error>> {
+    func getAssets(_ page: Int, limit: Int) -> Observable<Result<[AssetDetail], Error>> {
         
         return Observable.create { [self] (observer) -> Disposable in
                         

@@ -13,7 +13,7 @@ import RxRelay
 protocol AssetDetailViewModelProtocol {
     var navigationBarTitle: BehaviorRelay<String> { get }
     var tapPermalinkButton: PublishRelay<Void> { get }
-    var image: BehaviorRelay<UIImage?> { get }
+    var uiImage: BehaviorRelay<UIImage?> { get }
     var name: BehaviorRelay<String?> { get }
     var description: BehaviorRelay<String?> { get }
 }
@@ -22,29 +22,47 @@ class AssetDetailViewModel: AssetDetailViewModelProtocol {
                 
     let navigationBarTitle = BehaviorRelay<String>(value: "")
     let tapPermalinkButton = PublishRelay<Void>()
-    let image = BehaviorRelay<UIImage?>(value: nil)
+    let uiImage = BehaviorRelay<UIImage?>(value: nil)
     let name = BehaviorRelay<String?> (value: nil)
     let description = BehaviorRelay<String?> (value: nil)
     
     private let disposeBag = DisposeBag()
     private let coordinator: AssetDetailCoordinator
+    private let asset: AssetDetail
+    private let image: UIImage?
     
-    init(coordinator: AssetDetailCoordinator) {
+    init(coordinator: AssetDetailCoordinator, asset: AssetDetail, assetImage: UIImage?) {
+        
         self.coordinator = coordinator
+        self.asset = asset
+        self.image = assetImage
+        
+        setupNavigationBarTitle()
+        setupAssetRelay()
+        setupTapPermalinkButton()
+    }
     
-        if let name = coordinator._asset.collection?.name {
+    private func setupNavigationBarTitle() {
+        
+        if let name = asset.collection?.name {
             navigationBarTitle.accept(name)
         }
+    }
+    
+    private func setupAssetRelay() {
         
-        image.accept(coordinator._image)
-        name.accept(coordinator._asset.name)
-        description.accept(coordinator._asset.description)
+        uiImage.accept(image)
+        name.accept(asset.name)
+        description.accept(asset.description)
+    }
+    
+    private func setupTapPermalinkButton() {
         
         tapPermalinkButton
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 
-                if let permalink = owner.coordinator._asset.permalink, let url = URL(string: permalink), UIApplication.shared.canOpenURL(url) {
+                if let permalink = owner.asset.permalink, let url = URL(string: permalink), UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url)
                 }
             })

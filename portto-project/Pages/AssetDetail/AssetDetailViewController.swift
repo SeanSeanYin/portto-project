@@ -145,7 +145,7 @@ class AssetDetailViewController: UIViewController {
             imageViewHeightConstraint
         ])
         
-        viewModel.image
+        viewModel.uiImage
             .withUnretained(self)
             .do(onNext: { owner, image in
                 if let height = image?.size.height, let width = image?.size.width {

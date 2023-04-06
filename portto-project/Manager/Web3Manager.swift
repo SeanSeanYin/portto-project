@@ -15,7 +15,12 @@ enum Web3Error: Error {
     case UnknownError
 }
 
-class Web3Manager {
+protocol Web3Protocol {
+    
+    func getBalance(_ address:String) async -> Observable<Result<String, Error>>
+}
+
+class Web3Manager: Web3Protocol {
     
     private let ulrString = "https://rpc.ankr.com/eth_goerli"
     

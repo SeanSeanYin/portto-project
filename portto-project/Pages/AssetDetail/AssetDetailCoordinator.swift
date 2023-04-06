@@ -7,22 +7,26 @@
 
 import UIKit
 
-class AssetDetailCoordinator: Coordinator {
+protocol AssetDetailCoordinatorProtocol: AnyObject {
+    
+}
+
+class AssetDetailCoordinator: Coordinator, AssetDetailCoordinatorProtocol {
     
     unowned let nvController: UINavigationController
-    let _asset: AssetDetail
-    let _image: UIImage?
+    let asset: AssetDetail
+    let image: UIImage?
     
     init(navigationController: UINavigationController, asset: AssetDetail, image: UIImage?) {
-        nvController = navigationController
-        _asset = asset
-        _image = image
+        self.nvController = navigationController
+        self.asset = asset
+        self.image = image
     }
         
     func start() {
                 
         let assetsDetailVC =  AssetDetailViewController()
-        let assetsDetailVM = AssetDetailViewModel(coordinator: self)
+        let assetsDetailVM = AssetDetailViewModel(coordinator: self, asset: asset, assetImage: image)
         
         assetsDetailVC.viewModel = assetsDetailVM
         

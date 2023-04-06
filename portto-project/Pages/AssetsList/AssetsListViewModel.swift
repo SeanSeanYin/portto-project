@@ -32,6 +32,7 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     private let coordinator: AssetsListCoordinator
     
     private var page: Int = 0
+    private let numbersPerPage = 20
     private var cachedImages:[(Int, UIImage)] = []
     
     func imageOfIndex(index: Int) -> UIImage? {
@@ -52,10 +53,10 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
         setupScrollToEnd()
         setupSelectedId()
         getAssets()
-        web3()
+        getBalance()
     }
     
-    private func web3 () {
+    private func getBalance() {
         
         let web3Manager = Web3Manager()
         Task {
@@ -79,11 +80,11 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
         scrollToEnd
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                        
-                guard !owner.isLoading.value else {
+                                        
+                guard (owner.assets.value.count % owner.numbersPerPage == 0), !owner.isLoading.value else {
                     return
                 }
-                
+                                
                 owner.page += 1
                 owner.getAssets()
             })
@@ -91,6 +92,7 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     }
     
     private func setupSelectedId() {
+        
         selectedId
             .withUnretained(self)
             .subscribe(onNext: { owner, id in
@@ -108,11 +110,12 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
         isLoading.accept(true)
         
         let _ = networkManager
-            .getAssets(page)
+            .getAssets(page, limit: numbersPerPage)
             .withUnretained(self)
             .subscribe(onNext: { owner, result in
                                 
                 switch result {
+                    
                     case .success(let newAssets):
                     var tmpAssets: [AssetDetail] = []
 

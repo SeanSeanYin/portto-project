@@ -7,7 +7,12 @@
 
 import UIKit
 
-class AssetsListCoordinator: Coordinator {
+protocol AssetsListCoordinatorProtocol: AnyObject {
+    
+    func pushAssetDetailPage(_ asset: AssetDetail, image: UIImage?)
+}
+
+class AssetsListCoordinator: Coordinator, AssetsListCoordinatorProtocol {
     
     unowned let nvController: UINavigationController
     
