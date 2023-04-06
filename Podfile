@@ -11,4 +11,6 @@ target 'portto-project' do
     pod 'Alamofire'
     pod 'RxAlamofire'
     pod 'Moya/RxSwift', '~> 15.0'
+    pod 'web3.swift'
+
 end

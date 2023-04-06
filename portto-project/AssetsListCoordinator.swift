@@ -20,7 +20,10 @@ class AssetsListCoordinator: Coordinator {
                 
         let assetsListVC =  AssetsListViewController()
         let networkManager = NetworkManager()
-        let assetsListVM = AssetsListViewModel(networkManager: networkManager, coordinator: self)
+        let web3Manager = Web3Manager()
+        let assetsListVM = AssetsListViewModel(networkManager: networkManager,
+                                               web3Manager: web3Manager,
+                                               coordinator: self)
         
         assetsListVC.viewModel = assetsListVM
         

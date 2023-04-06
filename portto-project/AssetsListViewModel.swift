@@ -15,6 +15,7 @@ protocol AssetsListViewModelProtocol {
     var scrollToEnd: PublishRelay<Void> { get }
     var imageData: PublishRelay<(UIImage, Int, Bool)> { get }
     var selectedId: PublishRelay<Int> { get }
+    var navigationBarTitle: BehaviorRelay<String> { get }
 }
 
 class AssetsListViewModel: AssetsListViewModelProtocol {
@@ -23,9 +24,11 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     let scrollToEnd =  PublishRelay<Void>()
     let imageData = PublishRelay<(UIImage, Int, Bool)>()
     let selectedId = PublishRelay<Int>()
+    let navigationBarTitle = BehaviorRelay<String>(value: "")
     
     private let disposeBag = DisposeBag()
     private let networkManager: NetworkManager
+    private let web3Manager: Web3Manager
     private let coordinator: AssetsListCoordinator
     
     private var page: Int = 0
@@ -40,14 +43,35 @@ class AssetsListViewModel: AssetsListViewModelProtocol {
     
     let assets = BehaviorRelay<[AssetDetail]>(value: [])
     
-    init(networkManager: NetworkManager, coordinator: AssetsListCoordinator) {
+    init(networkManager: NetworkManager, web3Manager: Web3Manager, coordinator: AssetsListCoordinator) {
         
         self.networkManager = networkManager
+        self.web3Manager = web3Manager
         self.coordinator = coordinator
                         
         setupScrollToEnd()
         setupSelectedId()
         getAssets()
+        web3()
+    }
+    
+    private func web3 () {
+        
+        let web3Manager = Web3Manager()
+        Task {
+            await web3Manager
+                .getBalance()
+                .withUnretained(self)
+                .subscribe(onNext: { owner, result in
+                    switch result {
+                        case .failure(_):
+                            break
+                        case .success(let eth):
+                        owner.navigationBarTitle.accept(eth)
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     private func setupScrollToEnd() {

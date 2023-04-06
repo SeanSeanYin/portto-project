@@ -91,11 +91,15 @@ class AssetDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+     
+    private func setupNavigationBar() {
         
         viewModel.navigationBarTitle
             .bind(to: navigationItem.rx.title)
-            .disposed(by: disposeBag)                
-    }    
+            .disposed(by: disposeBag)
+    }
     
     private func setupLinkButton() {
         

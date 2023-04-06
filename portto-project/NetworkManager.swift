@@ -18,7 +18,7 @@ enum NetworkError: Error {
 }
 
 enum TestNets {
-    case assets(offset: Int, limit: Int = 20, address: String = "0x85fD692D2a075908079261F5E351e7fE0267dB02")
+    case assets(offset: Int, limit: Int = 20, address: String = EthAddress.GoerliTestOne.rawValue)
     case downloadImage(url: String)
 }
 

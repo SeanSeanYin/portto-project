@@ -45,7 +45,19 @@ class AssetsListViewController: UIViewController {
         setupCollectionView()
         setupActivityIndicator()
     }
-            
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+     
+    private func setupNavigationBar() {
+        
+        viewModel.navigationBarTitle
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
+    }
+    
     private func setupCollectionView() {
         
         view.addSubview(assetsListView)

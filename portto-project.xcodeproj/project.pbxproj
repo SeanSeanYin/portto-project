@@ -22,6 +22,8 @@
 		14AD00DD29DDB2CC00827F56 /* AssetDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD00DC29DDB2CC00827F56 /* AssetDetailCoordinator.swift */; };
 		14AD00DF29DDB35B00827F56 /* AssetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD00DE29DDB35B00827F56 /* AssetDetailViewController.swift */; };
 		14AD00E129DDB3B300827F56 /* AssetDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD00E029DDB3B300827F56 /* AssetDetailViewModel.swift */; };
+		14AD00E329DE459200827F56 /* Web3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD00E229DE459200827F56 /* Web3Manager.swift */; };
+		14AD00E529DE9ADD00827F56 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD00E429DE9ADD00827F56 /* Enums.swift */; };
 		16A58FD09973E2157E6D0ECB /* Pods_portto_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1DF4946A589D501E66E74B /* Pods_portto_project.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 		14AD00DC29DDB2CC00827F56 /* AssetDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailCoordinator.swift; sourceTree = "<group>"; };
 		14AD00DE29DDB35B00827F56 /* AssetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailViewController.swift; sourceTree = "<group>"; };
 		14AD00E029DDB3B300827F56 /* AssetDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailViewModel.swift; sourceTree = "<group>"; };
+		14AD00E229DE459200827F56 /* Web3Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Manager.swift; sourceTree = "<group>"; };
+		14AD00E429DE9ADD00827F56 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		672AB63B660AE84D1C9F7429 /* Pods-portto-project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-portto-project.release.xcconfig"; path = "Target Support Files/Pods-portto-project/Pods-portto-project.release.xcconfig"; sourceTree = "<group>"; };
 		C8117530FE250502CB5842F2 /* Pods-portto-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-portto-project.debug.xcconfig"; path = "Target Support Files/Pods-portto-project/Pods-portto-project.debug.xcconfig"; sourceTree = "<group>"; };
 		CD1DF4946A589D501E66E74B /* Pods_portto_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_portto_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +101,8 @@
 				14AD00DC29DDB2CC00827F56 /* AssetDetailCoordinator.swift */,
 				14AD00DE29DDB35B00827F56 /* AssetDetailViewController.swift */,
 				14AD00E029DDB3B300827F56 /* AssetDetailViewModel.swift */,
+				14AD00E229DE459200827F56 /* Web3Manager.swift */,
+				14AD00E429DE9ADD00827F56 /* Enums.swift */,
 			);
 			path = "portto-project";
 			sourceTree = "<group>";
@@ -234,10 +240,12 @@
 			files = (
 				14AD00D129DCFE7900827F56 /* AssetsListViewModel.swift in Sources */,
 				14AD00D929DD168E00827F56 /* AssetDetail.swift in Sources */,
+				14AD00E329DE459200827F56 /* Web3Manager.swift in Sources */,
 				14AD00DB29DD241700827F56 /* NetworkManager.swift in Sources */,
 				14AD00C929DCFC6E00827F56 /* AppCoordinator.swift in Sources */,
 				14AD00D329DD0EE500827F56 /* AssetCell.swift in Sources */,
 				14AD00B729DCE82400827F56 /* ViewController.swift in Sources */,
+				14AD00E529DE9ADD00827F56 /* Enums.swift in Sources */,
 				14AD00E129DDB3B300827F56 /* AssetDetailViewModel.swift in Sources */,
 				14AD00B329DCE82400827F56 /* AppDelegate.swift in Sources */,
 				14AD00CF29DCFE3C00827F56 /* AssetsListViewController.swift in Sources */,
